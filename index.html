@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Basics - Your First Steps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --accent-1: #4cc9f0;
+            --accent-2: #f72585;
+            --accent-3: #7209b7;
+            --text-primary: #f0f4f8;
+            --text-secondary: #b8c5d6;
+            --code-bg: #0d1117;
+            --success: #4ade80;
+            --warning: #fbbf24;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(76, 201, 240, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(247, 37, 133, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(114, 9, 183, 0.1) 0%, transparent 50%);
+            animation: breathe 10s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: gradient-shift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(76, 201, 240, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+        .section:nth-child(7) { animation-delay: 0.7s; }
+        .section:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            border-color: rgba(76, 201, 240, 0.4);
+            box-shadow: 0 10px 40px rgba(76, 201, 240, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent-1);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent-2);
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--code-bg);
+            padding: 3px 8px;
+            border-radius: 5px;
+            color: var(--accent-1);
+            font-size: 0.95em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent-2);
+            position: relative;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+            display: block;
+            line-height: 1.8;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.75rem;
+            color: var(--accent-3);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .highlight {
+            color: var(--accent-1);
+            font-weight: 600;
+        }
+
+        .comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        ul, ol {
+            margin: 20px 0 20px 30px;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+
+        li::marker {
+            color: var(--accent-2);
+        }
+
+        .tip {
+            background: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid var(--accent-1);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tip strong {
+            color: var(--accent-1);
+        }
+
+        .practice {
+            background: rgba(247, 37, 133, 0.1);
+            border: 2px solid var(--accent-2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .practice h3 {
+            margin-top: 0;
+            font-size: 1.6rem;
+        }
+
+        .question {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 3px solid var(--accent-3);
+        }
+
+        .question strong {
+            color: var(--accent-1);
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.2);
+        }
+
+        th {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--accent-1);
+            font-weight: 600;
+        }
+
+        td:first-child {
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            pre {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-gradient"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Python Basics</h1>
+            <p class="subtitle">Your first steps into programming 🐍</p>
+        </header>
+
+        <div class="section">
+            <h2>1. print()</h2>
+            <p>The <code>print()</code> function displays text or values on the screen. It's how your program talks to you!</p>
+            
+            <pre><span class="code-label">Python</span><code><span class="highlight">print</span>(<span class="comment">"Hello, World!"</span>)
+<span class="highlight">print</span>(<span class="comment">"I'm learning Python!"</span>)
+<span class="highlight">print</span>(42)
+<span class="highlight">print</span>(3.14)</code></pre>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Text (strings) must be wrapped in quotes <code>"like this"</code> or <code>'like this'</code>. Numbers don't need quotes.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Variables</h2>
+            <p>Variables are like labeled boxes that store information. You can put data in them and use them later!</p>
+            
+            <pre><span class="code-label">Python</span><code><span class="comment"># Creating variables</span>
+name = <span class="comment">"Alex"</span>
+age = 16
+height = 5.7
+is_student = True
+
+<span class="comment"># Using variables</span>
+<span class="highlight">print</span>(name)
+<span class="highlight">print</span>(<span class="comment">"I am"</span>, age, <span class="comment">"years old"</span>)</code></pre>
+
+            <h3>Variable Rules:</h3>
+            <ul>
+                <li>Names can contain letters, numbers, and underscores</li>
+                <li>Must start with a letter or underscore (not a number)</li>
+                <li>Case-sensitive: <code>Name</code> and <code>name</code> are different</li>
+                <li>Use descriptive names: <code>student_count</code> is better than <code>sc</code></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>3. Type Conversion</h2>
+            <p>Converting data from one type to another. Sometimes you need a number as text, or text as a number!</p>
+
+            <h3>Implicit Conversion (Automatic)</h3>
+            <p>Python does this automatically when it's safe:</p>
+            <pre><span class="code-label">Python</span><code>x = 5        <span class="comment"># integer</span>
+y = 2.5      <span class="comment"># float</span>
+result = x + y    <span class="comment"># Python converts x to float automatically</span>
+<span class="highlight">print</span>(result)  <span class="comment"># Output: 7.5</span></code></pre>
+
+            <h3>Explicit Conversion (Manual)</h3>
+            <p>You tell Python exactly what to convert:</p>
+            <pre><span class="code-label">Python</span><code><span class="comment"># String to Integer</span>
+age_text = <span class="comment">"25"</span>
+age_number = <span class="highlight">int</span>(age_text)
+<span class="highlight">print</span>(age_number + 5)  <span class="comment"># Output: 30</span>
+
+<span class="comment"># Integer to String</span>
+score = 100
+message = <span class="comment">"Your score is "</span> + <span class="highlight">str</span>(score)
+<span class="highlight">print</span>(message)  <span class="comment"># Output: Your score is 100</span>
+
+<span class="comment"># String to Float</span>
+price = <span class="highlight">float</span>(<span class="comment">"19.99"</span>)
+<span class="highlight">print</span>(price)  <span class="comment"># Output: 19.99</span></code></pre>
+
+            <div class="tip">
+                <strong>💡 Common Functions:</strong> <code>int()</code> → whole numbers, <code>float()</code> → decimals, <code>str()</code> → text
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Operators</h2>
+            <p>Operators let you perform calculations and comparisons.</p>
+
+            <h3>Arithmetic Operators</h3>
+            <table>
+                <tr>
+                    <th>Operator</th>
+                    <th>Name</th>
+                    <th>Example</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>+</td>
+                    <td>Addition</td>
+                    <td>5 + 3</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>Subtraction</td>
+                    <td>5 - 3</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>*</td>
+                    <td>Multiplication</td>
+                    <td>5 * 3</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>/</td>
+                    <td>Division</td>
+                    <td>5 / 2</td>
+                    <td>2.5</td>
+                </tr>
+                <tr>
+                    <td>//</td>
+                    <td>Floor Division</td>
+                    <td>5 // 2</td>
+                    <td>2 (no decimals)</td>
+                </tr>
+                <tr>
+                    <td>%</td>
+                    <td>Modulus (remainder)</td>
+                    <td>5 % 2</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>**</td>
+                    <td>Exponentiation</td>
+                    <td>5 ** 2</td>
+                    <td>25</td>
+                </tr>
+            </table>
+
+            <h3>Comparison Operators</h3>
+            <pre><span class="code-label">Python</span><code>a = 10
+b = 5
+
+<span class="highlight">print</span>(a == b)  <span class="comment"># Equal to: False</span>
+<span class="highlight">print</span>(a != b)  <span class="comment"># Not equal: True</span>
+<span class="highlight">print</span>(a > b)   <span class="comment"># Greater than: True</span>
+<span class="highlight">print</span>(a < b)   <span class="comment"># Less than: False</span>
+<span class="highlight">print</span>(a >= b)  <span class="comment"># Greater or equal: True</span>
+<span class="highlight">print</span>(a <= b)  <span class="comment"># Less or equal: False</span></code></pre>
+
+            <h3>Logical Operators</h3>
+            <pre><span class="code-label">Python</span><code>x = True
+y = False
+
+<span class="highlight">print</span>(x <span class="highlight">and</span> y)  <span class="comment"># Both must be True: False</span>
+<span class="highlight">print</span>(x <span class="highlight">or</span> y)   <span class="comment"># At least one True: True</span>
+<span class="highlight">print</span>(<span class="highlight">not</span> x)     <span class="comment"># Opposite: False</span></code></pre>
+        </div>
+
+        <div class="section">
+            <h2>5. Lists</h2>
+            <p>Lists are collections that can hold multiple items. Think of them as a container with numbered slots!</p>
+
+            <pre><span class="code-label">Python</span><code><span class="comment"># Creating a list</span>
+fruits = [<span class="comment">"apple"</span>, <span class="comment">"banana"</span>, <span class="comment">"cherry"</span>]
+numbers = [1, 2, 3, 4, 5]
+mixed = [<span class="comment">"hello"</span>, 42, True, 3.14]
+
+<span class="comment"># Accessing items (index starts at 0!)</span>
+<span class="highlight">print</span>(fruits[0])  <span class="comment"># Output: apple</span>
+<span class="highlight">print</span>(fruits[1])  <span class="comment"># Output: banana</span>
+<span class="highlight">print</span>(fruits[-1]) <span class="comment"># Output: cherry (last item)</span></code></pre>
+
+            <h3>Common List Methods</h3>
+            
+            <pre><span class="code-label">Python</span><code>my_list = [1, 2, 3]
+
+<span class="comment"># append() - add to the end</span>
+my_list.append(4)
+<span class="highlight">print</span>(my_list)  <span class="comment"># [1, 2, 3, 4]</span>
+
+<span class="comment"># insert() - add at specific position</span>
+my_list.insert(1, 99)
+<span class="highlight">print</span>(my_list)  <span class="comment"># [1, 99, 2, 3, 4]</span>
+
+<span class="comment"># remove() - remove first occurrence of value</span>
+my_list.remove(99)
+<span class="highlight">print</span>(my_list)  <span class="comment"># [1, 2, 3, 4]</span>
+
+<span class="comment"># pop() - remove and return last item (or at index)</span>
+last = my_list.pop()
+<span class="highlight">print</span>(last)     <span class="comment"># 4</span>
+<span class="highlight">print</span>(my_list)  <span class="comment"># [1, 2, 3]</span>
+
+<span class="comment"># index() - find position of value</span>
+position = my_list.index(2)
+<span class="highlight">print</span>(position)  <span class="comment"># 1</span>
+
+<span class="comment"># count() - count occurrences</span>
+numbers = [1, 2, 2, 3, 2]
+<span class="highlight">print</span>(numbers.count(2))  <span class="comment"># 3</span>
+
+<span class="comment"># sort() - sort the list</span>
+numbers = [3, 1, 4, 1, 5]
+numbers.sort()
+<span class="highlight">print</span>(numbers)  <span class="comment"># [1, 1, 3, 4, 5]</span>
+
+<span class="comment"># reverse() - reverse the list</span>
+numbers.reverse()
+<span class="highlight">print</span>(numbers)  <span class="comment"># [5, 4, 3, 1, 1]</span>
+
+<span class="comment"># clear() - remove all items</span>
+numbers.clear()
+<span class="highlight">print</span>(numbers)  <span class="comment"># []</span>
+
+<span class="comment"># len() - get list length</span>
+fruits = [<span class="comment">"apple"</span>, <span class="comment">"banana"</span>, <span class="comment">"cherry"</span>]
+<span class="highlight">print</span>(len(fruits))  <span class="comment"># 3</span></code></pre>
+
+            <div class="tip">
+                <strong>💡 Remember:</strong> Lists are mutable (changeable) and use square brackets <code>[ ]</code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Tuples</h2>
+            <p>Tuples are like lists, but <strong>immutable</strong> (can't be changed after creation). Perfect for data that shouldn't be modified!</p>
+
+            <pre><span class="code-label">Python</span><code><span class="comment"># Creating a tuple</span>
+coordinates = (10, 20)
+rgb_color = (255, 128, 0)
+person = (<span class="comment">"Alice"</span>, 25, <span class="comment">"Engineer"</span>)
+
+<span class="comment"># Accessing items (same as lists)</span>
+<span class="highlight">print</span>(coordinates[0])  <span class="comment"># Output: 10</span>
+<span class="highlight">print</span>(person[1])       <span class="comment"># Output: 25</span>
+
+<span class="comment"># This will cause an error (tuples can't be changed):</span>
+<span class="comment"># coordinates[0] = 15  ❌ TypeError!</span></code></pre>
+
+            <h3>When to use Tuples vs Lists:</h3>
+            <ul>
+                <li><strong>Tuples:</strong> Use when data shouldn't change (like coordinates, RGB values, dates)</li>
+                <li><strong>Lists:</strong> Use when you need to add/remove/modify items</li>
+            </ul>
+
+            <div class="tip">
+                <strong>💡 Remember:</strong> Tuples use parentheses <code>( )</code> and are immutable (can't be changed)
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. input()</h2>
+            <p>The <code>input()</code> function lets your program ask questions and get answers from the user!</p>
+
+            <pre><span class="code-label">Python</span><code><span class="comment"># Getting user input</span>
+name = <span class="highlight">input</span>(<span class="comment">"What's your name? "</span>)
+<span class="highlight">print</span>(<span class="comment">"Hello,"</span>, name)
+
+<span class="comment"># Important: input() always returns a string!</span>
+age_text = <span class="highlight">input</span>(<span class="comment">"How old are you? "</span>)
+age = <span class="highlight">int</span>(age_text)  <span class="comment"># Convert to number</span>
+<span class="highlight">print</span>(<span class="comment">"In 5 years, you'll be"</span>, age + 5)
+
+<span class="comment"># Shorter version (convert directly)</span>
+height = <span class="highlight">float</span>(<span class="highlight">input</span>(<span class="comment">"Enter your height in meters: "</span>))
+<span class="highlight">print</span>(<span class="comment">"Your height is"</span>, height, <span class="comment">"meters"</span>)</code></pre>
+
+            <div class="tip">
+                <strong>💡 Important:</strong> <code>input()</code> always gives you a string, even if the user types a number. Use <code>int()</code> or <code>float()</code> to convert when needed!
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="practice">
+                <h3>🎯 Practice Questions</h3>
+                <p>Test your knowledge with these exercises!</p>
+
+                <div class="question">
+                    <strong>Question 1: Print & Variables</strong>
+                    Create variables for your name, favorite number, and favorite color. Print them in a sentence like: "My name is Alex, my favorite number is 7, and my favorite color is blue."
+                </div>
+
+                <div class="question">
+                    <strong>Question 2: Type Conversion</strong>
+                    Ask the user for two numbers using <code>input()</code>, add them together, and print the result. Remember to convert the inputs to integers!
+                </div>
+
+                <div class="question">
+                    <strong>Question 3: Operators</strong>
+                    Calculate the area of a rectangle. Ask for length and width, then multiply them. Also calculate the perimeter (2 × length + 2 × width).
+                </div>
+
+                <div class="question">
+                    <strong>Question 4: Lists</strong>
+                    Create a list of 5 of your favorite movies. Print the first movie, the last movie, and the total number of movies in the list.
+                </div>
+
+                <div class="question">
+                    <strong>Question 5: List Methods</strong>
+                    Start with the list <code>[10, 20, 30]</code>. Add 40 to the end, add 5 at the beginning, remove 20, and then print the final list.
+                </div>
+
+                <div class="question">
+                    <strong>Question 6: Tuples</strong>
+                    Create a tuple containing the days of the week. Print the first day and the last day.
+                </div>
+
+                <div class="question">
+                    <strong>Question 7: Challenge!</strong>
+                    Create a simple calculator: Ask the user for two numbers and an operation (+, -, *, /). Perform the calculation and print the result.
+                </div>
+
+                <div class="question">
+                    <strong>Question 8: List Challenge!</strong>
+                    Ask the user to input 3 numbers (one at a time). Store them in a list, sort the list, and print the sorted list along with the largest number (last item) and smallest number (first item).
+                </div>
+            </div>
+        </div>
+        <footer>
+            Made for my goddamn friends who keep asking me for python notes. I hate you all.
+        </footer>
+    </div>
+</body>
+</html>
